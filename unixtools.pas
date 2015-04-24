@@ -1,13 +1,10 @@
-Unit UnixTools, Classes;
+Unit UnixTools;
 
 
 interface
 
 uses unix, sysutils, Dos;
 type dynar = array of string;
-
-var dnr : TStringList;
-
 function inpath ( st : string) : boolean ;
 function getprogramoutput (s : string) : dynar;
 FUNCTION concatarrays ( a,b : dynar) : dynar;

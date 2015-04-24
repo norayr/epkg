@@ -1,5 +1,4 @@
-
-program epkg;
+program epkg; (* noch  2005 *)
  USES args, unixtools, SysUtils, Dos, StrUtils;
  //struct pkg {char * name; char * folder};
  TYPE pkg = RECORD
@@ -9,6 +8,7 @@ program epkg;
 
  CONST pkgdbpath='/var/db/pkg';
  VAR s : STRING;
+
  PROCEDURE showhelp;
  BEGIN
  WriteLn ('epkg v 1.3, help info');
@@ -67,8 +67,8 @@ program epkg;
  //The str is the dependecy of CATEGORY/PACKAGE.
  PROCEDURE equery(action : STRING; str : STRING);
  VAR a,b : UnixTools.dynar;
- VAR DEPEND_FILES : UnixTools.dynar;
- i,j,k : INTEGER;
+ VAR //DEPEND_FILES : UnixTools.dynar;
+ i,j : INTEGER;
  USE,PKGUSE,IUSE : INTEGER;
  f : TextFile;
  s,sl,sn : STRING;
@@ -290,25 +290,16 @@ program epkg;
  //Prepare the PATH to the CONTENTS file.
  s := pkgdbpath + '/' + p.folder + '/' + p.name + '/' + 'CONTENTS';
  // See at the newely made PATH the CONTENTS file exists.
- IF FileExists(s) THEN 
-    BEGIN 
-    Assign (f, s); 
-    reset(f);
+ IF FileExists(s) THEN BEGIN Assign (f, s); reset(f) END ELSE BEGIN WriteLn (' File ' + s + ' does not exists'); halt END;
  //Repeat the following block of code till the end of file is reached.
  //This block of code simply print out the contents of the CONTENTS file.
-    REPEAT
-       ReadLn (f,s);
-       IF (COPY(s,1,3) = 'obj') OR (COPY(s,1,3) = 'sym') THEN BEGIN
+ REPEAT
+ ReadLn (f,s);
+ IF (COPY(s,1,3) = 'obj') OR (COPY(s,1,3) = 'sym') THEN BEGIN
               sl := StrUtils.extractdelimited (2, s, [' ']);
 	      WriteLn (sl);
-       END{IF};
-    UNTIL EOF(f);
-    END
-   ELSE 
-    BEGIN 
-       WriteLn (' File ' + s + ' does not exists'); 
-       halt 
-    END
+              END{IF};
+ UNTIL EOF(f);
  END {ListContents};
 
  //This function updates the struct pkg.

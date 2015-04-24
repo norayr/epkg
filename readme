@@ -1,7 +1,0 @@
-
-This software useful for those who familiar with debians dpkg and accepts similar command line arguments.
-Initially it have been written to work with ept-get (ept-get.sf.net) software which helps to recoursively remove packages like it is done in debian with apt-get.
-It accepts similar syntax as well.
-Thereafter Sohail (sohail@stupidcomputing.com ) added some other equery functionality to epkg.
-So, now epkg implements dpkg and equery
-For more type epkg -h
